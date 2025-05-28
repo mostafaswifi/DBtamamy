@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id        Int                  @id @default(autoincrement())
+  employeeName String
+  employeeCode String           @unique
+  hireDate  DateTime?
+  department String?
+  jobTitle  String?
+  attendanceDepartures AttendanceDeparture[]
+  place Place[]            @relation("EmployeePlaces")
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+
+  @@map("employees") // Optional: Explicitly map the table name in the database
+}
+
+model AttendanceDeparture {
+  id                Int       @id @default(autoincrement())
+  employeeId        Int
+  employee          Employee?  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  attendanceTime    DateTime?
+  departureTime     DateTime?
+  attendanceStatus  String?
+  departureStatus   String?
+  notes             String?
+  cordx             Float?
+  cordy             Float?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("attendance_departures") // Optional: Explicitly map the table name in the database
+}
+
+
+// model to store places and their coordinates and relate it to employee table
+
+
+
+model Place {
+  id        Int       @id @default(autoincrement())
+  name      String
+  polygonPoints Point[]
+  Employee Employee[] @relation("EmployeePlaces")
+  
+  @@map("places") // Optional: Explicitly map the table name in the database
+}
+  
+  model Point {
+    id        Int     @id @default(autoincrement())
+    placeId   Int
+    place     Place   @relation(fields: [placeId], references: [id], onDelete: Cascade)
+    cordx     Float
+    cordy     Float
+  
+    @@map("points") // Optional: Explicitly map the table name in the database
+}
