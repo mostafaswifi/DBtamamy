@@ -1,7 +1,17 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
+import { withAccelerate } from '@prisma/extension-accelerate'
 import cors from 'cors'
-const prisma = new PrismaClient();
+
+
+
+
+const prisma = new PrismaClient().$extends(withAccelerate())
+
+
+
+
+
 const app = express();
 const port = 3001;
 
@@ -133,7 +143,7 @@ app.get('/employees/:employeeId/attendance', async (req, res) => {
 // POST a new attendance/departure record
 app.post('/attendance', async (req, res) => {
 
-  const { cordx,cordy, employeeId } = req.body.employeeId;
+  const { cordx, cordy, employeeId } = req.body;
 
   try {
    if (employeeId){
