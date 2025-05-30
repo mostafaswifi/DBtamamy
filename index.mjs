@@ -23,10 +23,15 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.get('/api/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
+
 // Employee Endpoints
 
 // GET all employees
-app.get('/employees', async (req, res) => {
+app.get('/api/employees', async (req, res) => {
   try {
     const employees = await prisma.employee.findMany();
     res.json(employees);
@@ -37,7 +42,7 @@ app.get('/employees', async (req, res) => {
 });
 
 // GET a single employee by ID
-app.get('/employees/:id', async (req, res) => {
+app.get('/api/employees/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const employee = await prisma.employee.findUnique({
@@ -55,7 +60,7 @@ app.get('/employees/:id', async (req, res) => {
 });
 
 // POST a new employee
-app.post('/employees', async (req, res) => {
+app.post('/api/employees', async (req, res) => {
   const { employeeName, employeeCode, hireDate, department, jobTitle } = req.body;
   try {
     const newEmployee = await prisma.employee.create({
@@ -75,7 +80,7 @@ app.post('/employees', async (req, res) => {
 });
 
 // PUT (update) an existing employee by ID
-app.put('/employees/:id', async (req, res) => {
+app.put('/api/employees/:id', async (req, res) => {
   const { id } = req.params;
   const { employeeName, employeeCode, department, jobTitle } = req.body;
 
@@ -98,7 +103,7 @@ app.put('/employees/:id', async (req, res) => {
 });
 
 // DELETE an employee by ID
-app.delete('/employees/:id', async (req, res) => {
+app.delete('/api/employees/:id', async (req, res) => {
   const { id } = req.params;
   try {
     await prisma.employee.delete({
@@ -114,7 +119,7 @@ app.delete('/employees/:id', async (req, res) => {
 // AttendanceDeparture Endpoints
 
 // GET all attendance records
-app.get('/attendance', async (req, res) => {
+app.get('/api/attendance', async (req, res) => {
   try {
     const attendanceRecords = await prisma.attendanceDeparture.findMany({
       include: { employee: true }, // Include employee details
@@ -127,7 +132,7 @@ app.get('/attendance', async (req, res) => {
 });
 
 // GET attendance records for a specific employee
-app.get('/employees/:employeeId/attendance', async (req, res) => {
+app.get('/api/employees/:employeeId/attendance', async (req, res) => {
   const { employeeId } = req.params;
   try {
     const attendanceRecords = await prisma.attendanceDeparture.findMany({
@@ -142,7 +147,7 @@ app.get('/employees/:employeeId/attendance', async (req, res) => {
 
 // POST a new attendance/departure record
 // POST a new attendance/departure record
-app.post('/attendance', async (req, res) => {
+app.post('/api/attendance', async (req, res) => {
   // Correctly destructure from req.body directly
   const { employeeId, cordx, cordy } = req.body; // <--- CORRECTED
 
@@ -173,7 +178,7 @@ app.post('/attendance', async (req, res) => {
 });
 
 // PUT (update) an existing attendance/departure record by ID
-app.put('/attendance/:id', async (req, res) => {
+app.put('/api/attendance/:id', async (req, res) => {
   const { id } = req.params;
   const { employeeId, attendanceTime, departureTime, attendanceStatus, departureStatus, notes } = req.body;
   try {
@@ -196,7 +201,7 @@ app.put('/attendance/:id', async (req, res) => {
 });
 
 // DELETE an attendance/departure record by ID
-app.delete('/attendance/:id', async (req, res) => {
+app.delete('/api/attendance/:id', async (req, res) => {
   const { id } = req.params;
   try {
     await prisma.attendanceDeparture.delete({
@@ -209,7 +214,7 @@ app.delete('/attendance/:id', async (req, res) => {
   }
 });
 
-app.delete(`/attendance`, async (req, res) => {
+app.delete('/api/attendance', async (req, res) => {
    try {
     await prisma.attendanceDeparture.deleteMany();
     res.status(204).send();
@@ -220,7 +225,7 @@ app.delete(`/attendance`, async (req, res) => {
 })
 
 // GET all place records
-app.get('/places', async (req, res) => {
+app.get('/api/places', async (req, res) => {
   try {
     const places = await prisma.place.findMany({
       include: { polygonPoints: true }, // Include polygon points for each place
@@ -234,7 +239,7 @@ app.get('/places', async (req, res) => {
 
 
 // POST a new place record
-app.post('/places', async (req, res) => {
+app.post('/api/places', async (req, res) => {
 
   const { name, placeId, points } = req.body;
   // console.log('Received data:', points);
@@ -263,7 +268,7 @@ app.post('/places', async (req, res) => {
 
 
 // GET all points records
-app.get('/points', async (req, res) => {
+app.get('/api/points', async (req, res) => {
   try {
     const points = await prisma.point.findMany();
     res.json(points);
@@ -275,7 +280,7 @@ app.get('/points', async (req, res) => {
 
 
 // POST a new point record
-app.post('/points', async (req, res) => {
+app.post('/api/points', async (req, res) => {
   const { placeId,cordx, cordy } = req.body;
   try {
     const newPoint = await prisma.point.create({
