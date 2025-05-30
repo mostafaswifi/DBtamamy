@@ -141,28 +141,34 @@ app.get('/employees/:employeeId/attendance', async (req, res) => {
 });
 
 // POST a new attendance/departure record
+// POST a new attendance/departure record
 app.post('/attendance', async (req, res) => {
-
-  const { cordx, cordy, employeeId } = req.body;
+  // Correctly destructure from req.body directly
+  const { employeeId, cordx, cordy } = req.body; // <--- CORRECTED
 
   try {
-   if (employeeId){
+    // Validate required fields
+    if (employeeId === undefined || isNaN(parseInt(employeeId)) || cordx === undefined || isNaN(parseFloat(cordx)) || cordy === undefined || isNaN(parseFloat(cordy))) {
+      return res.status(400).json({ error: 'Missing or invalid employeeId, cordx, or cordy' });
+    }
+
     const newAttendance = await prisma.attendanceDeparture.create({
       data: {
         employeeId: parseInt(employeeId),
         cordx: parseFloat(cordx),
-        cordy:parseFloat(cordy),
+        cordy: parseFloat(cordy),
       },
     });
     res.status(201).json(newAttendance);
-  
-   } else {
-    return
-   }
-    
+
   } catch (error) {
     console.error('Error creating attendance record:', error);
-    res.status(500).json({ error: 'Failed to create attendance record' });
+    // Be more specific if it's a Prisma validation error (e.g., employeeId not found)
+    if (error.code === 'P2003') { // Foreign key constraint failed
+        res.status(400).json({ error: 'Employee not found with the provided ID' });
+    } else {
+        res.status(500).json({ error: 'Failed to create attendance record' });
+    }
   }
 });
 
@@ -230,20 +236,20 @@ app.get('/places', async (req, res) => {
 // POST a new place record
 app.post('/places', async (req, res) => {
 
-  const { name, placeId, polygonPoints } = req.body;
-  // console.log('Received data:', polygonPoints);
-  // polygonPoints.forEach((point) => {
+  const { name, placeId, points } = req.body;
+  // console.log('Received data:', points);
+  // points.forEach((point) => {
   //   console.log(point);
   // });
-  const pointsData = req.body.polygonPoints.map(point => ({
-  cordx: parseFloat(point.cordx),
-  cordy: parseFloat(point.cordy)
-}));
+  const pointsData = points.map(point => ({
+    cordx: parseFloat(point.cordx),
+    cordy: parseFloat(point.cordy)
+  }));
   try {
     const newPlace = await prisma.place.create({
       data: {
         name,
-        polygonPoints: {
+        points: {
           create: pointsData
         },
       },
