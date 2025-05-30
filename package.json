@@ -1,20 +1,22 @@
 {
-  "name": "express-prisma-vercel",
+  "name": "dbtamamy",
   "version": "1.0.0",
+  "main": "index.mjs",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js",
-    "vercel-build": "prisma generate && prisma migrate deploy",
-    "postinstall": "prisma generate"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@prisma/client": "^6.8.2",
+    "prisma": "^6.8.2"
   },
   "dependencies": {
-    "@prisma/client": "^4.0.0",
-    "@prisma/extension-accelerate": "^4.0.0",
+    "@prisma/extension-accelerate": "^2.0.1",
     "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "prisma": "^4.0.0"
+    "express": "^5.1.0"
   },
-  "engines": {
-    "node": "18.x"
-  }
+  "type": "module"
 }
