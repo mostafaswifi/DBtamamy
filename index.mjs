@@ -1,12 +1,12 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
-import { withAccelerate } from '@prisma/extension-accelerate'
+// import { withAccelerate } from '@prisma/extension-accelerate'
 import cors from 'cors'
 
 
 
 
-const prisma = new PrismaClient().$extends(withAccelerate())
+const prisma = new PrismaClient()
 
 
 

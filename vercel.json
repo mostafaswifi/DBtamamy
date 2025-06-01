@@ -4,13 +4,16 @@
     {
       "src": "index.mjs",
       "use": "@vercel/node"
-      
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/index.js"
+      "dest": "index.mjs"
     }
-  ]
+  ],
+  "env": {
+    "DATABASE_URL": "prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMDFKV0M1Uk5TRjNUUlJTRlQ1SlhHMTAyWkUiLCJ0ZW5hbnRfaWQiOiJjOGNhODE5YTFjYTU2M2FjNWRkYmQ5ODRiNzYxMTYzNDE4NWIxOWNhMWNmNTI2MGUyMzFkZmE5ZTU1NTRmNTZlIiwiaW50ZXJuYWxfc2VjcmV0IjoiZGViNDA5MTAtNWEwMy00ZTIxLWIyM2ItYTFiMzAwZmY5MzZjIn0.cIo66AyO09Jdjq36Awmqs4a_5a8Y3sUSGf2nMKKpckw",
+    "PRISMA_CLIENT": "{\"datasource\":{\"url\":\"prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMDFKV0M1Uk5TRjNUUlJTRlQ1SlhHMTAyWkUiLCJ0ZW5hbnRfaWQiOiJjOGNhODE5YTFjYTU2M2FjNWRkYmQ5ODRiNzYxMTYzNDE4NWIxOWNhMWNmNTI2MGUyMzFkZmE5ZTU1NTRmNTZlIiwiaW50ZXJuYWxfc2VjcmV0IjoiZGViNDA5MTAtNWEwMy00ZTIxLWIyM2ItYTFiMzAwZmY5MzZjIn0.cIo66AyO09Jdjq36Awmqs4a_5a8Y3sUSGf2nMKKpckw\",\"provider\":\"postgresql\"},\"generate\":{\"client\":\"prisma-client-js\"}}"
+  }
 }

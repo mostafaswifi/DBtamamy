@@ -1,11 +1,13 @@
 generator client {
   provider = "prisma-client-js"
+  
   // Enable if using PostgreSQL extensions (like PostGIS)
   // previewFeatures = ["postgresqlExtensions"] 
 }
 
 datasource db {
-  provider = "postgresql" // or "sqlite" if using SQLite
+  // provider = "postgesql" // or "sqlite" if using SQLite
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
