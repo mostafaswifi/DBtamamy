@@ -301,10 +301,10 @@ app.post('/api/points', async (req, res) => {
 
 
 
-// // Start the server
-// app.listen(port, () => {
-//   console.log(`Server listening on port ${port}`);
-// });
+// Start the server
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
 
 export default app; // Export the app for testing or further use
 // Export the Prisma client for use in other modules
