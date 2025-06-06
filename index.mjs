@@ -33,7 +33,11 @@ app.get('/api/health', (req, res) => {
 // GET all employees
 app.get('/api/employees', async (req, res) => {
   try {
-    const employees = await prisma.employee.findMany();
+    const employees = await prisma.employee.findMany({
+      include: { attendanceDepartures: true }, // Include attendance records for each employee
+  
+    });
+
     res.json(employees);
   } catch (error) {
     console.error('Error fetching employees:', error);
