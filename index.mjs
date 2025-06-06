@@ -62,6 +62,9 @@ app.get('/api/employees/:id', async (req, res) => {
 // POST a new employee
 app.post('/api/employees', async (req, res) => {
   const { employeeName, employeeCode, hireDate, department, jobTitle } = req.body;
+  if (!employeeName || !employeeCode || employeeName.trim() === '' || employeeCode.trim() === '') {
+    return res.status(400).json({ error: 'Employee name and code are required' });
+  }
   try {
     const newEmployee = await prisma.employee.create({
       data: {
@@ -228,7 +231,7 @@ app.delete('/api/attendance', async (req, res) => {
 app.get('/api/places', async (req, res) => {
   try {
     const places = await prisma.place.findMany({
-      include: { polygonPoints: true }, // Include polygon points for each place
+      include: { points: true }, // Include polygon points for each place
     });
     res.json(places);
   } catch (error) {
@@ -246,6 +249,7 @@ app.post('/api/places', async (req, res) => {
   // points.forEach((point) => {
   //   console.log(point);
   // });
+  
   const pointsData = points.map(point => ({
     cordx: parseFloat(point.cordx),
     cordy: parseFloat(point.cordy)
@@ -282,6 +286,7 @@ app.get('/api/points', async (req, res) => {
 // POST a new point record
 app.post('/api/points', async (req, res) => {
   const { placeId,cordx, cordy } = req.body;
+ 
   try {
     const newPoint = await prisma.point.create({
       data: {
