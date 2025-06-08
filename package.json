@@ -10,8 +10,8 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@prisma/client": "^6.8.2",
-    "prisma": "^6.8.2"
+    "@prisma/client": "^6.9.0",
+    "prisma": "^6.9.0"
   },
   "dependencies": {
     "@prisma/extension-accelerate": "^2.0.1",
