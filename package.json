@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.mjs",
   "scripts": {
-  "build": "prisma generate && next build",
+  "build": "prisma generate",
   "postinstall": "prisma generate"  },
   "keywords": [],
   "author": "",
