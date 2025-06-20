@@ -27,12 +27,12 @@ app.use(cors({
 app.use(express.json());
 
 // Health Check Endpoint
-app.get('/api/health', (req, res) => {
+app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', timestamp: new Date() });
 });
 
 // Employee Endpoints
-app.route('/api/employees')
+app.route('/employees')
   .get(async (req, res) => {
     try {
       const employees = await prisma.employee.findMany({
@@ -55,7 +55,7 @@ app.route('/api/employees')
     }
   });
 
-app.route('/api/employees/:id')
+app.route('/employees/:id')
   .get(async (req, res) => {
     try {
       const employee = await prisma.employee.findUnique({
@@ -88,7 +88,7 @@ app.route('/api/employees/:id')
   });
 
 // Attendance Endpoints
-app.route('/api/attendance')
+app.route('/attendance')
   .get(async (req, res) => {
     try {
       const records = await prisma.attendanceDeparture.findMany({
@@ -124,7 +124,7 @@ app.route('/api/attendance')
   });
 
 // Places Endpoints
-app.route('/api/places')
+app.route('/places')
   .get(async (req, res) => {
     try {
       const places = await prisma.place.findMany({ include: { points: true } });
