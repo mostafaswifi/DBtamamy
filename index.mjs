@@ -14,11 +14,11 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 // Initialize Prisma and Express
 const prisma = new PrismaClient().$extends(withAccelerate())
 const app = express();
-const port = process.env.PORT || 3001 || 'https://tamamy.vercel.app/';
+const port = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  origin: process.env.CORS_ORIGIN || 'http://localhost:3000'|| '*', // Allow all origins for development
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
