@@ -14,7 +14,7 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 // Initialize Prisma and Express
 const prisma = new PrismaClient().$extends(withAccelerate())
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 8080 ||3001;
 
 // Middleware
 app.use(cors({
