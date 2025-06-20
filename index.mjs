@@ -19,8 +19,7 @@ const port = process.env.PORT || 8080 ||3001;
 // Middleware
 app.use(cors({
    origin: [
-    'https://tamamy-aevs1zbrz-mostafas-projects-3ebaadeb.vercel.app',
-    'http://localhost:3000' // For local development
+    'https://tamamy-aevs1zbrz-mostafas-projects-3ebaadeb.vercel.app' // For local development
   ], // Allow all origins for development
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
